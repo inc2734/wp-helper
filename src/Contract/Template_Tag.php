@@ -42,6 +42,7 @@ trait Template_Tag {
 
 		$extended = get_extended( $post->post_content );
 		$content  = $extended['main'];
+		$content  = do_blocks( $content );
 		return $content;
 	}
 
@@ -59,7 +60,10 @@ trait Template_Tag {
 		$text = strip_shortcodes( $text );
 		$text = str_replace( ']]>', ']]&gt;', $text );
 
-		$excerpt_length = apply_filters( 'excerpt_length', 55 );
+		// phpcs:disable WordPress.WP.I18n.MissingArgDomain
+		$excerpt_length = intval( _x( '55', 'excerpt_length' ) );
+		// phpcs:enable
+		$excerpt_length = apply_filters( 'excerpt_length', $excerpt_length );
 		$excerpt_more   = apply_filters( 'excerpt_more', ' [&hellip;]' );
 
 		$text = wp_trim_words( $text, $excerpt_length, $excerpt_more );
