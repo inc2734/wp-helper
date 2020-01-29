@@ -42,7 +42,6 @@ trait Template_Tag {
 
 		$extended = get_extended( $post->post_content );
 		$content  = $extended['main'];
-		$content  = do_blocks( $content );
 		return $content;
 	}
 
@@ -58,6 +57,7 @@ trait Template_Tag {
 
 		$text = static::get_pure_post_content();
 		$text = strip_shortcodes( $text );
+		$text = excerpt_remove_blocks( $text );
 		$text = str_replace( ']]>', ']]&gt;', $text );
 
 		// phpcs:disable WordPress.WP.I18n.MissingArgDomain
