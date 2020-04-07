@@ -14,7 +14,6 @@ trait Template {
 	/**
 	 * Return included files and directories
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
 	 * @param string $directory
 	 * @param boolean $exclude_underscore
 	 * @return void
@@ -83,7 +82,6 @@ trait Template {
 	/**
 	 * Include php files
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
 	 * @param string $directory
 	 * @param boolean $exclude_underscore
 	 * @return void
@@ -107,7 +105,6 @@ trait Template {
 	/**
 	 * Include php files
 	 *
-	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
 	 * @param string $directory
 	 * @param boolean $exclude_underscore
 	 * @return void

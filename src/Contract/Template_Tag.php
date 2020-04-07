@@ -80,4 +80,48 @@ trait Template_Tag {
 	public static function is_active_sidebar( $sidebar_id ) {
 		return is_active_sidebar( $sidebar_id ) && is_registered_sidebar( $sidebar_id );
 	}
+
+	/**
+	 * Return array for kses for img
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/wp_kses/
+	 *
+	 * @return array
+	 */
+	public static function img_allowed_attributes() {
+		return [
+			'width'    => true,
+			'height'   => true,
+			'src'      => true,
+			'class'    => true,
+			'alt'      => true,
+			'srcset'   => true,
+			'sizes'    => true,
+			'decoding' => true,
+			'loading'  => true,
+		];
+	}
+
+	/**
+	 * Display escaped img element
+	 *
+	 * @param int $attachment_id
+	 * @param string|array $size
+	 * @param bool $icon
+	 * @param string|array $attr
+	 * @return void
+	 */
+	public static function the_kses_image( $attachment_id, $size = 'thumbnail', $icon = false, $attr = '' ) {
+		$image = wp_get_attachment_image( $attachment_id, $size, $icon, $attr );
+		if ( ! $image ) {
+			return;
+		}
+
+		echo wp_kses(
+			$image,
+			[
+				'img' => static::img_allowed_attributes(),
+			]
+		);
+	}
 }
