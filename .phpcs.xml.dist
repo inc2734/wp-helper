@@ -26,10 +26,6 @@
 	</rule>
 	<rule ref="WordPress.CodeAnalysis.EmptyStatement"/>
 
-  <rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable">
-    <exclude-pattern>/block/*/view\.php</exclude-pattern>
-  </rule>
-
 	<rule ref="PEAR.Functions.FunctionCallSignature">
 		<properties>
 			<property name="allowMultipleArguments" value="false"/>
