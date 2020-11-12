@@ -7,77 +7,12 @@
 
 namespace Inc2734\WP_Helper\Contract;
 
+use FilesystemIterator;
 use DirectoryIterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 trait Template {
-
-	/**
-	 * Return included files and directories
-	 *
-	 * @param string $directory
-	 * @param boolean $exclude_underscore
-	 * @return void
-	 */
-	public static function get_include_files( $directory, $exclude_underscore = false ) {
-		$return = [
-			'files'       => [],
-			'directories' => [],
-		];
-
-		if ( ! is_dir( $directory ) ) {
-			return $return;
-		}
-
-		$directory_iterator = new DirectoryIterator( $directory );
-
-		foreach ( $directory_iterator as $file ) {
-			if ( $file->isDot() ) {
-				continue;
-			}
-
-			if ( $file->isDir() ) {
-				$return['directories'][] = $file->getPathname();
-				continue;
-			}
-
-			if ( 'php' !== $file->getExtension() ) {
-				continue;
-			}
-
-			if ( $exclude_underscore ) {
-				if ( 0 === strpos( $file->getBasename(), '_' ) ) {
-					continue;
-				}
-			}
-
-			$return['files'][] = $file->getPathname();
-		}
-
-		return $return;
-	}
-
-	/**
-	 * Returns PHP file list
-	 *
-	 * @param string Directory path
-	 * @return array PHP file list
-	 */
-	public static function glob_recursive( $path ) {
-		$files = [];
-		if ( preg_match( '/\\' . DIRECTORY_SEPARATOR . 'vendor$/', $path ) ) {
-			return $files;
-		}
-
-		foreach ( glob( $path . '/*' ) as $file ) {
-			if ( is_dir( $file ) ) {
-				$files = array_merge( $files, static::glob_recursive( $file ) );
-			} elseif ( preg_match( '/\.php$/', $file ) ) {
-				$files[] = $file;
-			}
-		}
-
-		return $files;
-	}
 
 	/**
 	 * Include php files
@@ -87,18 +22,52 @@ trait Template {
 	 * @return void
 	 */
 	public static function include_files( $directory, $exclude_underscore = false ) {
+		$directory = realpath( $directory );
 		if ( ! is_dir( $directory ) ) {
 			return;
 		}
 
-		$files = static::get_include_files( $directory, $exclude_underscore );
+		$iterator = new RecursiveDirectoryIterator( $directory, FilesystemIterator::SKIP_DOTS );
+		$iterator = new RecursiveIteratorIterator( $iterator );
 
-		foreach ( $files['files'] as $file ) {
-			include_once( $file );
+		$files = [];
+
+		foreach ( $iterator as $file ) {
+			if ( ! $file->isFile() ) {
+				continue;
+			}
+
+			if ( 'php' !== $file->getExtension() ) {
+				continue;
+			}
+
+			if ( $exclude_underscore && 0 === strpos( $file->getBasename(), '_' ) ) {
+				continue;
+			}
+
+			$files[] = realpath( $file->getPathname() );
 		}
 
-		foreach ( $files['directories'] as $directory ) {
-			static::include_files( $directory, $exclude_underscore );
+		if ( ! $files ) {
+			return;
+		}
+
+		usort(
+			$files,
+			function( $a, $b ) {
+				$adeps = substr_count( $a, DIRECTORY_SEPARATOR );
+				$bdeps = substr_count( $b, DIRECTORY_SEPARATOR );
+
+				if ( $adeps === $bdeps ) {
+					return 0;
+				}
+
+				return $adeps > $bdeps ? 1 : -1;
+			}
+		);
+
+		foreach ( $files as $filepath ) {
+			include_once( $filepath );
 		}
 	}
 
@@ -111,7 +80,6 @@ trait Template {
 	 */
 	public static function load_theme_files( $directory, $exclude_underscore = false ) {
 		$directory = realpath( $directory );
-
 		if ( ! is_dir( $directory ) ) {
 			return;
 		}
@@ -119,18 +87,50 @@ trait Template {
 		$template_directory   = realpath( get_template_directory() );
 		$stylesheet_directory = realpath( get_stylesheet_directory() );
 
-		$files = static::get_include_files( $directory, $exclude_underscore );
+		$iterator = new RecursiveDirectoryIterator( $directory, FilesystemIterator::SKIP_DOTS );
+		$iterator = new RecursiveIteratorIterator( $iterator );
 
-		foreach ( $files['files'] as $file ) {
-			$file = realpath( $file );
-			$file = str_replace( $template_directory, '', $file );
-			$file = str_replace( $stylesheet_directory, '', $file );
-			$file = get_theme_file_path( $file );
-			include_once( $file );
+		$files = [];
+
+		foreach ( $iterator as $file ) {
+			if ( ! $file->isFile() ) {
+				continue;
+			}
+
+			if ( 'php' !== $file->getExtension() ) {
+				continue;
+			}
+
+			if ( $exclude_underscore && 0 === strpos( $file->getBasename(), '_' ) ) {
+				continue;
+			}
+
+			$files[] = realpath( $file->getPathname() );
 		}
 
-		foreach ( $files['directories'] as $directory ) {
-			static::load_theme_files( $directory, $exclude_underscore );
+		if ( ! $files ) {
+			return;
+		}
+
+		usort(
+			$files,
+			function( $a, $b ) {
+				$adeps = substr_count( $a, DIRECTORY_SEPARATOR );
+				$bdeps = substr_count( $b, DIRECTORY_SEPARATOR );
+
+				if ( $adeps === $bdeps ) {
+					return 0;
+				}
+
+				return $adeps > $bdeps ? 1 : -1;
+			}
+		);
+
+		foreach ( $files as $filepath ) {
+			$basepath = str_replace( $template_directory, '', $filepath );
+			$basepath = str_replace( $stylesheet_directory, '', $basepath );
+			$filepath = get_theme_file_path( $basepath );
+			include_once( $filepath );
 		}
 	}
 }

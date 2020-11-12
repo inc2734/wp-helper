@@ -14,4 +14,5 @@ trait Helper {
 	use Template_Tag;
 	use Editor;
 	use Utility;
+	use Deprecated;
 }
