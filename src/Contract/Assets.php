@@ -10,9 +10,9 @@ namespace Inc2734\WP_Helper\Contract;
 trait Assets {
 
 	/**
-	 * Generate script dependencies
+	 * Generate script dependencies.
 	 *
-	 * @param array $maybe_dependencies
+	 * @param array $maybe_dependencies An array of registered handles this stylesheet depends on.
 	 * @return array
 	 */
 	public static function generate_script_dependencies( $maybe_dependencies ) {
@@ -27,9 +27,9 @@ trait Assets {
 	}
 
 	/**
-	 * Generate style dependencies
+	 * Generate style dependencies.
 	 *
-	 * @param array $maybe_dependencies
+	 * @param array $maybe_dependencies An array of registered handles this stylesheet depends on.
 	 * @return array
 	 */
 	public static function generate_style_dependencies( $maybe_dependencies ) {
@@ -44,7 +44,7 @@ trait Assets {
 	}
 
 	/**
-	 * Returns main script handle
+	 * Returns main script handle.
 	 *
 	 * @return string
 	 */
@@ -59,7 +59,7 @@ trait Assets {
 	}
 
 	/**
-	 * Returns main style handle
+	 * Returns main style handle.
 	 *
 	 * @return string
 	 */

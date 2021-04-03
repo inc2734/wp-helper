@@ -10,17 +10,17 @@ namespace Inc2734\WP_Helper\Contract;
 trait Editor {
 
 	/**
-	 * Return true when the page has block editor
+	 * Return true when the page has block editor.
 	 *
 	 * @return boolean
 	 */
 	public static function is_block_editor() {
 		return static::is_gutenberg_page()
-					 || ( function_exists( '\use_block_editor_for_post' ) && \use_block_editor_for_post( get_post() ) );
+					|| function_exists( '\use_block_editor_for_post' ) && \use_block_editor_for_post( get_post() );
 	}
 
 	/**
-	 * Return true when active the Gutenberg plugin
+	 * Return true when active the Gutenberg plugin.
 	 *
 	 * @return boolean
 	 */

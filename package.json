@@ -2,7 +2,7 @@
   "author": "inc2734",
   "license": "GPL-2.0+",
   "devDependencies": {
-    "@wordpress/env": "^2.1.0",
+    "@wordpress/env": "^4.0.0",
     "npm-run-all": "^4.1.5"
   },
   "scripts": {
@@ -11,11 +11,11 @@
     "stop": "wp-env stop",
     "cli": "wp-env run cli",
     "wp": "wp-env run cli wp",
-    "prelint:php": "wp-env run composer 'install --no-interaction'",
-    "lint:php": "wp-env run composer run-script lint",
-    "lint": "run-s lint:*",
-    "pretest:php": "wp-env start",
-    "test:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/wp-helper/.phpunit.xml.dist --verbose'",
+    "pretest": "wp-env start && wp-env run composer 'install --no-interaction'",
+    "test:lint:php": "wp-env run composer run-script lint",
+    "test:lint": "run-s test:lint:*",
+    "test:unit:php": "wp-env run phpunit 'phpunit -c /var/www/html/wp-content/plugins/wp-helper/.phpunit.xml.dist --verbose'",
+    "test:unit": "run-s test:unit:*",
     "test": "run-s test:*"
   }
 }

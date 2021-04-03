@@ -10,9 +10,7 @@ namespace Inc2734\WP_Helper\Contract;
 trait Template_Tag {
 
 	/**
-	 * Display the site logo or the site title
-	 *
-	 * @return void
+	 * Display the site logo or the site title.
 	 */
 	public static function the_site_branding() {
 		?>
@@ -25,7 +23,7 @@ trait Template_Tag {
 	}
 
 	/**
-	 * Return pure post content
+	 * Return pure post content.
 	 *
 	 * @return string
 	 */
@@ -46,7 +44,7 @@ trait Template_Tag {
 	}
 
 	/**
-	 * Return pure trim excerpt
+	 * Return pure trim excerpt.
 	 *
 	 * @link https://developer.wordpress.org/reference/functions/wp_trim_excerpt/
 	 *
@@ -72,9 +70,9 @@ trait Template_Tag {
 	}
 
 	/**
-	 * Return true when the sidebar is registerd and active
+	 * Return true when the sidebar is registerd and active.
 	 *
-	 * @param string $sidebar_id
+	 * @param string $sidebar_id Sidebar name, id or number to check.
 	 * @return boolean
 	 */
 	public static function is_active_sidebar( $sidebar_id ) {
@@ -82,7 +80,7 @@ trait Template_Tag {
 	}
 
 	/**
-	 * Return array for kses for img
+	 * Return array for kses for img.
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/wp_kses/
 	 *
@@ -103,13 +101,12 @@ trait Template_Tag {
 	}
 
 	/**
-	 * Display escaped img element
+	 * Display escaped img element.
 	 *
-	 * @param int $attachment_id
-	 * @param string|array $size
-	 * @param bool $icon
-	 * @param string|array $attr
-	 * @return void
+	 * @param int          $attachment_id Image attachment ID.
+	 * @param string|array $size          Image size. Accepts any registered image size name, or an array of width and height values in pixels (in that order).
+	 * @param bool         $icon          Whether the image should be treated as an icon.
+	 * @param string|array $attr          Attributes for the image markup.
 	 */
 	public static function the_kses_image( $attachment_id, $size = 'thumbnail', $icon = false, $attr = '' ) {
 		$image = wp_get_attachment_image( $attachment_id, $size, $icon, $attr );

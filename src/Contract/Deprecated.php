@@ -12,13 +12,13 @@ use DirectoryIterator;
 trait Deprecated {
 
 	/**
-	 * Return included files and directories
+	 * Return included files and directories.
 	 *
 	 * @deprecated
 	 *
-	 * @param string $directory
-	 * @param boolean $exclude_underscore
-	 * @return void
+	 * @param string  $directory          Target directory.
+	 * @param boolean $exclude_underscore Return true if you want to exclude underscore.
+	 * @return array
 	 */
 	public static function get_include_files( $directory, $exclude_underscore = false ) {
 		$return = [
@@ -59,12 +59,12 @@ trait Deprecated {
 	}
 
 	/**
-	 * Returns PHP file list
+	 * Returns PHP file list.
 	 *
 	 * @deprecated
 	 *
-	 * @param string Directory path
-	 * @return array PHP file list
+	 * @param string $path Directory path.
+	 * @return array PHP file list.
 	 */
 	public static function glob_recursive( $path ) {
 		$files = [];

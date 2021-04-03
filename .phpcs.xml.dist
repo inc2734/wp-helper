@@ -14,6 +14,7 @@
     <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/>
     <exclude name="Squiz.Commenting.FileComment.SpacingAfterComment"/>
     <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+    <exclude name="WordPress.WP.CapitalPDangit.Misspelled"/>
   </rule>
 	<rule ref="WordPress-Docs"/>
 	<rule ref="WordPress.WP.I18n"/>

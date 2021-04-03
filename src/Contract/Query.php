@@ -12,9 +12,9 @@ use WP_Query;
 trait Query {
 
 	/**
-	 * Return the child pages
+	 * Return the child pages.
 	 *
-	 * @var int $post_id
+	 * @param int $post_id The post ID.
 	 * @return array
 	 */
 	public static function get_child_pages_query( $post_id ) {
@@ -32,9 +32,9 @@ trait Query {
 	}
 
 	/**
-	 * Return related posts
+	 * Return related posts.
 	 *
-	 * @param int $post_id
+	 * @param int $post_id The post ID.
 	 * @return array
 	 */
 	public static function get_related_posts_query( $post_id ) {
