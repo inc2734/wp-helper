@@ -76,19 +76,11 @@ trait Template {
 	 * @param boolean $exclude_underscore Return true if you want to exclude underscore.
 	 */
 	public static function get_theme_files( $directory, $exclude_underscore = false ) {
-		$directory            = realpath( $directory );
-		$template_directory   = realpath( get_template_directory() );
-		$stylesheet_directory = realpath( get_stylesheet_directory() );
-
-		$template_directory = is_child_theme()
-			? $stylesheet_directory
-			: $template_directory;
+		$directory           = realpath( $directory );
+		$template_directory  = realpath( get_template_directory() );
 
 		// Relative path
-		if (
-			0 !== strpos( $directory, $template_directory )
-			&& 0 !== strpos( $directory, $stylesheet_directory )
-		) {
+		if ( false === strpos( $directory, ABSPATH ) ) {
 			$directory = $template_directory . DIRECTORY_SEPARATOR . $directory;
 		}
 
