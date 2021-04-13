@@ -76,8 +76,8 @@ trait Template {
 	 * @param boolean $exclude_underscore Return true if you want to exclude underscore.
 	 */
 	public static function get_theme_files( $directory, $exclude_underscore = false ) {
-		$directory           = realpath( $directory );
-		$template_directory  = realpath( get_template_directory() );
+		$directory          = realpath( $directory );
+		$template_directory = realpath( get_template_directory() );
 
 		// Relative path
 		if ( false === strpos( $directory, ABSPATH ) ) {
