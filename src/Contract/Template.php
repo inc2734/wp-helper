@@ -80,7 +80,7 @@ trait Template {
 		$template_directory = realpath( get_template_directory() );
 
 		// Relative path
-		if ( false === strpos( $directory, ABSPATH ) ) {
+		if ( false === strpos( $directory, realpath( ABSPATH ) ) ) {
 			$directory = $template_directory . DIRECTORY_SEPARATOR . $directory;
 		}
 
@@ -91,7 +91,11 @@ trait Template {
 
 		$relative_files = [];
 		foreach ( $files as $filepath ) {
-			$relative_files[] = str_replace( trailingslashit( $template_directory ), '', realpath( $filepath ) );
+			$relative_files[] = str_replace(
+				realpath( trailingslashit( $template_directory ) ),
+				'',
+				realpath( $filepath )
+			);
 		}
 
 		return $relative_files;
