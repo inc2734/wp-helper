@@ -83,4 +83,3 @@ trait Deprecated {
 		return $files;
 	}
 }
-

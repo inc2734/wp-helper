@@ -53,7 +53,7 @@ trait Template {
 
 		usort(
 			$files,
-			function( $a, $b ) {
+			function ( $a, $b ) {
 				$adeps = substr_count( $a, DIRECTORY_SEPARATOR );
 				$bdeps = substr_count( $b, DIRECTORY_SEPARATOR );
 
@@ -113,7 +113,7 @@ trait Template {
 			if ( $exclude_underscore ) {
 				$files = array_filter(
 					$files,
-					function( $filepath ) {
+					function ( $filepath ) {
 						return 0 !== strpos( basename( $filepath ), '_' );
 					}
 				);
@@ -138,7 +138,7 @@ trait Template {
 	 */
 	public static function include_file( $filepath ) {
 		if ( file_exists( $filepath ) ) {
-			include_once( $filepath );
+			include_once $filepath;
 		}
 	}
 
@@ -154,7 +154,7 @@ trait Template {
 			if ( $exclude_underscore ) {
 				$files = array_filter(
 					$files,
-					function( $filename ) {
+					function ( $filename ) {
 						return 0 !== strpos( $filename, '_' );
 					}
 				);
@@ -180,7 +180,7 @@ trait Template {
 	public static function load_theme_file( $filename ) {
 		$filepath = get_theme_file_path( $filename );
 		if ( file_exists( $filepath ) ) {
-			include_once( $filepath );
+			include_once $filepath;
 		}
 	}
 }
